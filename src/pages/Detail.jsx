@@ -49,7 +49,7 @@ export const Detail = () => {
             <div className="absolute z-0 top-0 w-full h-full bg-opacity-50 bg-black"></div>
           </div>
           {/* Isi detail movie */}
-          <div className="absolute bottom-0 w-1/2 h-2/3 ml-7">
+          <div className="absolute bottom-0 w-1/2 h-[70%] ml-7">
             <div className="text-white absolute top-0 font-sans flex flex-col gap-5 items-baseline h-full">
               <h1 className="text-8xl font-semibold mb-2">{detailMovie.title}</h1>
               <p className="text-2xl text-white mb-4">{detailMovie.genres.map((genre) => genre.name).join(", ")}</p>
