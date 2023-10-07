@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { RenderList } from "./RenderList";
 import { useMovieDataQuery } from "../services/get-data-movie";
 import { searchMovie } from "../services/search-movie";
-import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { SliderItem } from "./SliderItem";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useMovieDataPopular } from "../services/get-data-movie-popular";
+import { Link } from "react-router-dom";
 
 export const MovieList = () => {
   const [LoadData, setLoadData] = useState([]);
@@ -16,7 +16,7 @@ export const MovieList = () => {
   const [searchQuery, setSearchQuery] = useState(""); // Menyimpan nama film yang dicari
   const [dataSlider, setdataSlider] = useState([]);
   const [dataPopular, setdataPopular] = useState([]);
-  const [isSearching, setIsSearching] = useState(false); // Track if a search is in progress
+  const [isSearching, setIsSearching] = useState(false);
 
   const { data: fetchUser } = useMovieDataQuery({
     language: "en-US",
@@ -84,7 +84,7 @@ export const MovieList = () => {
             {dataSlider.map((value) => {
               return (
                 <SwiperSlide key={value.id}>
-                  <SliderItem dataSlider={value} />{" "}
+                  <SliderItem dataSlider={value} />
                 </SwiperSlide>
               );
             })}
