@@ -4,65 +4,31 @@ import { Link, useParams } from "react-router-dom";
 import { API_ENDPOINT } from "../utils/api-endpoints";
 
 export const Detail = () => {
-  const [detailMovie, setDetailMovie] = useState(null);
-  const [trailer, setTrailer] = useState(null);
+  const [detailMovie, setdetailMovie] = useState("");
 
   const apikey = process.env.REACT_APP_APIKEY;
-  const { id } = useParams();
+  const move = useParams();
 
+  // console.log(detailMovie);
   useEffect(() => {
-    // Fungsi untuk mendapatkan data detail film
-    const fetchDetailMovie = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_SERVER}${API_ENDPOINT.DETAIL}/${id}`,
-          {
-            params: {
-              api_key: apikey,
-              append_to_response: "videos",
-            },
-          }
-        );
-        setDetailMovie(response.data);
+    movePage();
+  }, [move.id]);
+  // console.log(detailMovie);
 
-        // Temukan trailer dalam video results, jika ada
-        const trailerVideo = response.data.videos.results.find(
-          (video) => video.type === "Trailer"
-        );
-
-        if (trailerVideo) {
-          setTrailer(`https://www.youtube.com/watch?v=${trailerVideo.key}`);
-        }
-      } catch (error) {
-        console.error("Error fetching movie details:", error);
-      }
-    };
-
-    fetchDetailMovie();
-  }, [apikey, id]);
-
+  const movePage = async () => {
+    const movie = await axios(`${process.env.REACT_APP_SERVER}${API_ENDPOINT.DETAIL}${move.id}?api_key=${apikey}&append_to_response=videos`);
+    setdetailMovie(movie.data);
+  };
+  const cektrailer = detailMovie && detailMovie.videos.results.find((video) => video.type === "Trailer");
+  const trailer = cektrailer ? detailMovie && `https://www.youtube.com/watch?v=${cektrailer.key}` : detailMovie && `https://www.youtube.com/watch?v=${detailMovie.videos.results[0].key}`;
+  console.log(trailer);
   return (
     <>
-      {detailMovie && (
-        <div className="bg-white p-0">
-          <div className="relative" style={{ height: "100vh", overflow: "hidden" }}>
-            <img
-              src={`https://image.tmdb.org/t/p/original/${detailMovie.poster_path}`}
-              alt={detailMovie.title}
-              className="w-full h-auto object-cover"
-              style={{ maxHeight: "100vh" }}
-            />
-          </div>
-          <h1 className="text-2xl font-semibold mt-4">{detailMovie.title}</h1>
-          <p className="text-gray-600">Release Date: {detailMovie.release_date}</p>
-          {trailer && (
-            <a href={trailer} target="_blank" rel="noopener noreferrer">
-              Watch Trailer
-            </a>
-          )}
-          <Link to="/">Back to Movie List</Link>
+      <div className="w-full bg-center bg-cover bg-no-repeat h-screen" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original/${detailMovie.backdrop_path})` }}>
+        <div className="absolute bottom-0 flex items-end bg-red-500 w-1/2 h-2/3">
+          <h1 className="absolute top-0">{detailMovie.title}</h1>
         </div>
-      )}
+      </div>
     </>
   );
 };
