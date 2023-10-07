@@ -94,6 +94,18 @@ export const MovieList = () => {
 
       <div className="mt-[50px]">
         <header className="flex justify-between items-center mb-5 px-[20px]">
+          <h1 className={`text-3xl font-bold ${searchQuery ? "self-start" : ""}`}>{searchQuery ? `Search Result "${searchQuery}"` : "NOW PLAYING"}</h1>
+          <h1 className="text-red-500 text-3xl font-bold">See All Movie</h1>
+        </header>
+        <div className="flex flex-wrap w-screen justify-center">
+          {LoadData.map((value, index) => (
+            <RenderList key={index} dataMovie={value} />
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-[50px]">
+        <header className="flex justify-between items-center mb-5 px-[20px]">
           <h1 className={`text-3xl font-bold ${searchQuery ? "self-start" : ""}`}>{searchQuery ? `Search Result "${searchQuery}"` : "POPULAR MOVIE"}</h1>
           <h1 className="text-red-500 text-3xl font-bold">See All Movie</h1>
         </header>
@@ -103,7 +115,7 @@ export const MovieList = () => {
           ))}
         </div>
 
-        <h1>{PageNow}</h1>
+        {/* <h1>{PageNow}</h1>
         <button
           onClick={() => {
             setPageNow(PageNow - 1);
@@ -117,7 +129,7 @@ export const MovieList = () => {
           }}
         >
           plus
-        </button>
+        </button> */}
       </div>
     </>
   );
