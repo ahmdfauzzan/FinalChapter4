@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "../src/assets/css/index.css";
 import { RouterList } from "./routes/RouterList.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

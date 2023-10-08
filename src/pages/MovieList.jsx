@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RenderList } from "./RenderList";
 import { useMovieDataQuery } from "../services/get-data-movie";
-import { searchMovie } from "../services/search-movie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
