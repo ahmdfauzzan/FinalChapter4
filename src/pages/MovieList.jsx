@@ -103,7 +103,9 @@ export const MovieList = () => {
       <div className="mt-[50px]">
         <header className="flex justify-between items-center mb-5 px-[20px]">
           <h1 className="text-3xl font-bold">POPULAR MOVIE</h1>
-          <h1 className="text-red-500 text-3xl font-bold">See All Movie</h1>
+          <Link to="/moviesAll" className="text-red-500 text-3xl font-bold">
+            See All Movie
+          </Link>
         </header>
         <div className="flex flex-wrap w-screen justify-center">
           {dataPopular.map((value, index) => (
