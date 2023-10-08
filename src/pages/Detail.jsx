@@ -20,8 +20,8 @@ export const Detail = () => {
   };
 
   const cektrailer = detailMovie && detailMovie.videos.results.find((video) => video.type === "Trailer");
+  const trailer = cektrailer ? `https://www.youtube.com/watch?v=${cektrailer.key}` : null;
 
-  const trailer = detailMovie && `https://www.youtube.com/watch?v=${cektrailer.key}`;
   console.log(trailer);
 
   return (
