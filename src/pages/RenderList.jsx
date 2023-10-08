@@ -6,7 +6,7 @@ export const RenderList = ({ dataMovie }) => {
   const truncatedTitle = dataMovie.title.length > maxPanjangJudul ? dataMovie.title.slice(0, maxPanjangJudul) + "..." : dataMovie.title;
   return (
     <Link to={`/detail/${dataMovie.id}`} className="w-[33%] max-w-[300px] p-4 transition-transform transform hover:scale-105">
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="bg-white shadow-lg rounded-lg overflow-hidden h-[500px]">
         <div className="relative aspect-w-2 aspect-h-3">
           <img src={`https://image.tmdb.org/t/p/original/${dataMovie.poster_path}`} alt={dataMovie.title} className="w-full h-full object-cover" />
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black opacity-60"></div>

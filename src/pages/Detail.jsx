@@ -7,20 +7,21 @@ export const Detail = () => {
   const [detailMovie, setdetailMovie] = useState("");
 
   const apikey = process.env.REACT_APP_APIKEY;
-  const move = useParams();
+  const movieData = useParams();
 
   // console.log(detailMovie);
   useEffect(() => {
     movePage();
-  }, [move.id]);
-  // console.log(detailMovie);
+  }, [movieData.id]);
 
   const movePage = async () => {
-    const movie = await axios(`${process.env.REACT_APP_SERVER}${API_ENDPOINT.DETAIL}${move.id}?api_key=${apikey}&append_to_response=videos`);
+    const movie = await axios(`${process.env.REACT_APP_SERVER}${API_ENDPOINT.DETAIL}${movieData.id}?api_key=${apikey}&append_to_response=videos`);
     setdetailMovie(movie.data);
   };
+
   const cektrailer = detailMovie && detailMovie.videos.results.find((video) => video.type === "Trailer");
-  const trailer = cektrailer ? detailMovie && `https://www.youtube.com/watch?v=${cektrailer.key}` : detailMovie && `https://www.youtube.com/watch?v=${detailMovie.videos.results[0].key}`;
+
+  const trailer = detailMovie && `https://www.youtube.com/watch?v=${cektrailer.key}`;
   console.log(trailer);
 
   return (
@@ -51,13 +52,17 @@ export const Detail = () => {
           {/* Isi detail movie */}
           <div className="absolute bottom-0 w-1/2 h-[70%] ml-7">
             <div className="text-white absolute top-0 font-sans flex flex-col gap-5 items-baseline h-full">
-              <h1 className="text-8xl font-semibold mb-2">{detailMovie.title}</h1>
-              <p className="text-2xl text-white mb-4">{detailMovie.genres.map((genre) => genre.name).join(", ")}</p>
-              <p className="text-white mt-4 text-2xl w-[]">{detailMovie.overview}</p>
-              <p className="text-white mt-4 text-2xl">Rating: {detailMovie.vote_average} / 10</p>
-              <p className="text-white mt-4 text-2xl">Release Date: {detailMovie.release_date}</p>
+              <h1 className="text-7xl font-semibold mb-2">{detailMovie.title}</h1>
+              <p className="text-xl text-white mb-4">{detailMovie.genres.map((genre) => genre.name).join(", ")}</p>
+              <p className="text-white mt-4 text-xl">{detailMovie.overview}</p>
+              <p className="text-white mt-4 text-xl">Rating: {detailMovie.vote_average} / 10</p>
+              <p className="text-white mt-4 text-xl">Release Date: {detailMovie.release_date}</p>
               {trailer && (
                 <a href={trailer} target="_blank" rel="noopener noreferrer" className="w-[20%] flex justify-center bg-red-600 text-white rounded-full px-4 py-2 mt-4 font-semibold hover:bg-red-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z" />
+                  </svg>
                   Watch Trailer
                 </a>
               )}

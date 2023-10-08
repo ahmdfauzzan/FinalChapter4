@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import { SliderItem } from "./SliderItem";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useMovieDataPopular } from "../services/get-data-movie-popular";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const MovieList = () => {
   const [LoadData, setLoadData] = useState([]);
@@ -17,6 +17,7 @@ export const MovieList = () => {
   const [dataSlider, setdataSlider] = useState([]);
   const [dataPopular, setdataPopular] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const navigate = useNavigate();
 
   const { data: fetchUser } = useMovieDataQuery({
     language: "en-US",
@@ -49,19 +50,12 @@ export const MovieList = () => {
     }
   }, [fetchUser2, isSearching]);
 
-  const search = async (q) => {
-    if (q.length > 2) {
-      setSearchQuery(q); // Menyimpan nama film yang dicari
-      const query = await searchMovie(q);
-      setLoadData(query.results);
-      setIsSearching(true);
-    } else {
-      // If the search query is empty, reset to original data
-      setSearchQuery("");
-      setIsSearching(false);
+  // search harus di enter
+  const handleSearchEnter = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/search/${searchQuery}`);
     }
   };
-
   return (
     <>
       <div className="relative h-[100vh] top-0 left-0 w-full">
@@ -69,7 +63,7 @@ export const MovieList = () => {
           <button className="font-serif text-[#dd060b] font-bold sizemovielist">Movielist</button>
 
           <div className="w-1/3 h-2/3 relative">
-            <input className="w-full h-full rounded-full border border-red-300 pl-6 pr-10" placeholder="What do you to watch?" onChange={({ target }) => search(target.value)}></input>
+            <input className="w-full h-full rounded-full border border-red-300 pl-6 pr-10" placeholder="What do you want to watch?" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyPress={handleSearchEnter}></input>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute right-2 w-6 h-6 top-1/2 transform -translate-y-1/2 text-gray-400">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
