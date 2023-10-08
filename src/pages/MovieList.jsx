@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import { SliderItem } from "./SliderItem";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useMovieDataPopular } from "../services/get-data-movie-popular";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const MovieList = () => {
   const [LoadData, setLoadData] = useState([]);
@@ -60,8 +60,9 @@ export const MovieList = () => {
     <>
       <div className="relative h-[100vh] top-0 left-0 w-full">
         <div className="z-50 flex justify-between items-center h-[75px] mx-7 relative">
-          <button className="font-serif text-[#dd060b] font-bold sizemovielist">Movielist</button>
-
+          <Link to="/" className="font-serif text-[#dd060b] font-bold sizemovielist">
+            Movielist
+          </Link>
           <div className="w-1/3 h-2/3 relative">
             <input className="w-full h-full rounded-full border border-red-300 pl-6 pr-10" placeholder="What do you want to watch?" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyPress={handleSearchEnter}></input>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="absolute right-2 w-6 h-6 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -89,7 +90,9 @@ export const MovieList = () => {
       <div className="mt-[50px]">
         <header className="flex justify-between items-center mb-5 px-[20px]">
           <h1 className={`text-3xl font-bold ${searchQuery ? "self-start" : ""}`}>{searchQuery ? `Search Result "${searchQuery}"` : "NOW PLAYING"}</h1>
-          <h1 className="text-red-500 text-3xl font-bold">See All Movie</h1>
+          <Link to="/moviesAll" className="text-red-500 text-3xl font-bold">
+            See All Movie
+          </Link>
         </header>
         <div className="flex flex-wrap w-screen justify-center">
           {LoadData.map((value, index) => (
